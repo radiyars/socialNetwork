@@ -5,7 +5,7 @@
 	display: grid;
 	grid-template-rows: 60px 1fr;
 	grid-template-columns: 2fr 10fr;
-	/* grid-gap: 10px; */
+	grid-gap: 10px;
 
 	grid-template-areas:
 	"header header"
@@ -13,21 +13,5 @@
 
 }
 
-.header {
-	grid-area: header;
-	background-color: green;
-}
 
-.header img {
-	width: 20px;
-}
 
-.nav {
-	grid-area: nav;
-	background-color: burlywood;
-}
-
-.content {
-	grid-area: content;
-	background-color: cornflowerblue;
-}
