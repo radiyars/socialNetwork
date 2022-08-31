@@ -4,7 +4,7 @@ import classes from './Profile.module.css'
 
 function Profile() {
 	return (
-		<div className={classes.content}>
+		<div>
 			<div>
 				<img src='https://cdn.ziarahmekkah.com/2021/12/bg-footer-ziarah-mekkah.png' />
 			</div>
