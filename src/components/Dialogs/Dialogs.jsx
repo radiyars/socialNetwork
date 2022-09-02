@@ -4,7 +4,12 @@ import classes from './Dialogs.module.css';
 function Dialogs(props) {
 	return (
 		<div>
-			Dialogs
+			Dialogs bla bla
+			sadfasdf
+			asdfas
+			fasdf
+			asdf
+
 		</div>
 	)
 }
