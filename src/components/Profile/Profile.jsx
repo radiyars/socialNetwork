@@ -1,16 +1,13 @@
 import MyPosts from './MyPosts/MyPosts'
+
 import classes from './Profile.module.css'
+import ProfileInfo from './ProfileInfo/ProfileInfo'
 
 
 function Profile() {
 	return (
 		<div>
-			<div>
-				<img src='https://cdn.ziarahmekkah.com/2021/12/bg-footer-ziarah-mekkah.png' className={classes.img} />
-			</div>
-			<div>
-				avatar + description
-			</div>
+			<ProfileInfo />
 			<MyPosts />
 		</div>
 	)
