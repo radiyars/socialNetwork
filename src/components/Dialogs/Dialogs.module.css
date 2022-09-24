@@ -3,7 +3,7 @@
 	grid-template-columns: 2fr 10fr;
 }
 
-.dialogsItems{
+.dialogsItems {
 	padding: 10px;
 }
 
@@ -11,17 +11,13 @@
 
 .dialogsItems .active {
 	color: gold;
-	
-}
-
-.dialog{
 
 }
 
-.messages{
+.dialog {}
+
+.messages {
 	padding: 10px;
 }
 
-.message{
-	
-}
+.message {}
