@@ -1,11 +1,9 @@
-const ADD_POST = 'ADD-POST';
-const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT';
-const ADD_MESSAGE = 'ADD-MESSAGE';
-const UPDATE_NEW_MESSAGE_TEXT = 'UPDATE-NEW-MESSAGE-TEXT';
-
+import dialogsReducer from "./dialogsReducer";
+import profileReducer from "./profileReducer";
 
 let store = {
 
+	// Непосредственно данные
 	_state: {
 
 		profilePage: {
@@ -38,10 +36,12 @@ let store = {
 		}
 	},
 
+	// 
 	_callSubscriber() {
 		console.log('State changed');
 	},
 
+	// "Подписчик" - следит за наблюдателем callback функцией
 	subscribe(observer) {
 		this._callSubscriber = observer; // паттерн observer
 	},
@@ -50,72 +50,13 @@ let store = {
 		return this._state
 	},
 
+	// В зависимости от типа объекта action.type выполняем ту или иную callback функйию
 	dispatch(action) {
-		switch (action.type) {
-
-			case ADD_POST:
-				let newPost = {
-					id: 5,
-					post: this._state.profilePage.newPostText,
-					likesCount: 0
-				};
-				this._state.profilePage.posts.push(newPost);
-				this._state.profilePage.newPostText = '';
-				this._callSubscriber(this._state);
-				break;
-
-			case UPDATE_NEW_POST_TEXT:
-				this._state.profilePage.newPostText = action.newText;
-				this._callSubscriber(this._state);
-				break;
-
-			case ADD_MESSAGE:
-				let newMessage = {
-					id: 5,
-					message: this._state.dialogsPage.newMessageText,
-				}
-				this._state.dialogsPage.messages.push(newMessage);
-				this._state.dialogsPage.newMessageText = '';
-				this._callSubscriber(this._state);
-				break;
-
-			case UPDATE_NEW_MESSAGE_TEXT:
-				this._state.dialogsPage.newMessageText = action.newMessage;
-				this._callSubscriber(this._state);
-				break;
-
-		}
+		// Отдельный reducer для каждого подоьбъекта
+		this._state.profilePage = profileReducer(this._state.profilePage, action);
+		this._state.dialogsPage = dialogsReducer(this._state.dialogsPage, action);
+		this._callSubscriber(this._state);
 	}
 }
-
-
-export const addPostActionCreator = () => {
-	return {
-		type: ADD_POST,
-	}
-}
-
-export const updateNewPostActionCreator = (text) => {
-	return {
-		type: UPDATE_NEW_POST_TEXT,
-		newText: text,
-	}
-}
-
-export const addMessageActionCreator = () => {
-	return {
-		type: ADD_MESSAGE,
-	}
-}
-
-export const updateNewMessageActionCreator = (text) => {
-	return {
-		type: UPDATE_NEW_MESSAGE_TEXT,
-		newMessage: text,
-	}
-}
-
 
 export default store
-
-window.state = store; // для вывода в консоль 
