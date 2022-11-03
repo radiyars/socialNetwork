@@ -19,9 +19,11 @@ function App(props) {
 				<Navbar />
 				<div className='app-wrapper-content'>
 					<Routes>
+						{/* С помошью Route следим за адресной строкой, и если адрес совпадает с path прорисовываем нашу компоненту */}
 						<Route path='/profile' element={<Profile profilePage={props.state.profilePage}
 							dispatch={props.dispatch} />} />
-						<Route path='/dialogs/*' element={<Dialogs state={props.state.dialogsPage} />} />
+						<Route path='/dialogs/*' element={<Dialogs dialogsPage={props.state.dialogsPage}
+							dispatch={props.dispatch} />} />
 						<Route path='/news' element={<News />} />
 						<Route path='/music' element={<Music />} />
 						<Route path='/settings' element={<Settings />} />

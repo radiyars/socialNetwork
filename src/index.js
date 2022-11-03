@@ -7,7 +7,7 @@ import App from './App';
 import store from './redux/state';
 
 
-//! 37
+//! 40
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
