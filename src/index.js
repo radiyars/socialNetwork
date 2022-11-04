@@ -4,10 +4,10 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
-import store from './redux/state';
+import store from './redux/reduxStore';
 
 
-//! 41
+//! 42
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
@@ -22,7 +22,11 @@ let rerenderEntireTree = (state) => {
 
 rerenderEntireTree(store.getState());
 
-store.subscribe(rerenderEntireTree);
+// subscribe у редаксовского stora не передает state!
+store.subscribe(() => {
+	let state = store.getState();
+	rerenderEntireTree(state);
+});
 
 
 reportWebVitals();
