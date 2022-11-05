@@ -7,14 +7,14 @@ import App from './App';
 import store from './redux/reduxStore';
 
 
-//! 42
+//! 43
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
 let rerenderEntireTree = (state) => {
 	root.render(
 		<React.StrictMode>
-			<App state={state} dispatch={store.dispatch.bind(store)} />
+			<App store={store} />
 		</React.StrictMode>
 	);
 }

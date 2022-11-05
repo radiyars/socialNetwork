@@ -1,29 +1,23 @@
 import React from 'react';
-import { addPostActionCreator, updateNewPostActionCreator } from '../../../redux/profileReducer';
 import style from './MyPosts.module.css'
 import Post from './Post/Post'
 
 
-
-
 function MyPosts(props) {
-	// debugger;
-
 
 	let postsElements = props.posts.map(post => <Post message={post.post} likesCount={post.likesCount} />)
-
-	let newPostElement = React.createRef();
+	let newPostText = props.newPostText;
 
 	// Пушим новый пост в state
-	let addPost = () => {
-		props.dispatch(addPostActionCreator());
+	let onAddPost = () => {
+		props.addPost()
 	}
 
 	// При любом изменении в textarea прокидываем иго (изменение) в state и уже оттуда выводим его 
 	// в textarea (FLUX - архитектура)
-	let onPostChange = () => {
-		let text = newPostElement.current.value;
-		props.dispatch(updateNewPostActionCreator(text));
+	let onPostChange = (event) => {
+		let text = event.target.value;
+		props.updateNewPostText(text);
 	}
 
 	return (
@@ -31,16 +25,18 @@ function MyPosts(props) {
 			<div>
 				<div>
 					<textarea onChange={onPostChange}
-						ref={newPostElement}
-						value={props.newPostText} />
+						value={newPostText}
+						placeholder='введите текст Вашего поста' />
 				</div>
-				<button onClick={addPost}>Add post</button>
+				<button onClick={onAddPost}>Add post</button>
 			</div>
 			<div className={style.posts}>
 				{postsElements}
 			</div>
 		</div>
 	)
+
 }
+
 
 export default MyPosts
