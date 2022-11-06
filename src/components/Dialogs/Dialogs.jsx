@@ -5,10 +5,10 @@ import Message from './Message/Message';
 
 
 function Dialogs(props) {
-
-	let dialogsElements = props.dialogs.map(dialog => <DialogItem name={dialog.name} id={dialog.id} />);
-	let messagesElements = props.messages.map(message => <Message message={message.message} />);
-	let newMessageText = props.newMessageText;
+	// debugger;
+	let dialogsElements = props.dialogsPage.dialogs.map(dialog => <DialogItem name={dialog.name} id={dialog.id} />);
+	let messagesElements = props.dialogsPage.messages.map(message => <Message message={message.message} />);
+	let newMessageText = props.dialogsPage.newMessageText;
 
 	// Пушим новое сообщение в state
 	let onSendMessageClick = () => {
