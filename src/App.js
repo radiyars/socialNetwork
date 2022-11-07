@@ -7,6 +7,7 @@ import Settings from './components/Settings/Settings';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import DialogsContainer from './components/Dialogs/DialogsContainer';
 import Profile from './components/Profile/Profile';
+import UsersContainer from './components/Users/UsersContainer';
 
 
 function App(props) {
@@ -20,6 +21,8 @@ function App(props) {
 						{/* С помошью Route следим за адресной строкой, и если адрес совпадает с path прорисовываем нашу компоненту */}
 						<Route path='/profile' element={<Profile />} />
 						<Route path='/dialogs/*' element={<DialogsContainer />} />
+						<Route path='/users/' element={<UsersContainer />} />
+
 						<Route path='/news' element={<News />} />
 						<Route path='/music' element={<Music />} />
 						<Route path='/settings' element={<Settings />} />

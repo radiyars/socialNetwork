@@ -8,7 +8,7 @@ import store from './redux/reduxStore';
 import { Provider } from 'react-redux';
 
 
-//! 47
+//! 49
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
