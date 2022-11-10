@@ -7,14 +7,43 @@ class Users extends React.Component {
 
 	// полсе того как компонента прорисовалась можно выполнить запрос на сервер
 	componentDidMount() {
-		axios.get("https://social-network.samuraijs.com/api/1.0/users").then(response => {
-			this.props.setUsers(response.data.items);
-		});
+		axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`)
+			.then(response => {
+				this.props.setUsers(response.data.items);
+				this.props.setTotalUsersCount(response.data.totalCount);
+			});
+	}
+
+	onPageChenged = (pageNumber) => {
+		this.props.setCurrentPage(pageNumber);
+		axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${pageNumber}&count=${this.props.pageSize}`)
+			.then(response => {
+				this.props.setUsers(response.data.items);
+			});
 	}
 
 	render() {
+		let pagesCount = Math.ceil(this.props.totalUsersCount / this.props.pageSize);
+
+		let pages = [];
+
+		for (let i = 1; i <= pagesCount; i++) {
+			pages.push(i);
+		}
+
+		let curP = this.props.currentPage;
+		let curPF = ((curP - 5) < 0) ? 0 : curP - 5;
+		let curPL = curP + 5;
+		let slicedPages = pages.slice(curPF, curPL);
 
 		return <div>
+
+			<div>
+				{slicedPages.map(p => {
+					return <span className={this.props.currentPage === p && styles.selectedPage} onClick={() => { this.onPageChenged(p) }} >{p + ' '}</span>
+				})}
+			</div>
+
 			{
 				this.props.users.map(user => <div key={user.id}>
 					<span>
@@ -39,7 +68,7 @@ class Users extends React.Component {
 					</span>
 				</div>)
 			}
-		</div>
+		</div >
 	}
 }
 
