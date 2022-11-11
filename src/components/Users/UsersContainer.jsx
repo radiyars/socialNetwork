@@ -1,32 +1,37 @@
 import React from "react";
 import { connect } from "react-redux";
-import { followAC, setCurrentPageAC, setTotalUsersCountAC, setUsersAC, unfollowAC } from "../../redux/usersReducer";
+import { followAC, setCurrentPageAC, setTotalUsersCountAC, setUsersAC, toggleIsFetchingAC, unfollowAC } from "../../redux/usersReducer";
 import axios from 'axios';
 import Users from "./Users";
+import Preloader from "../common/preloader/Preloader";
 
 
 class UsersContainer extends React.Component {
 
 	// полсе того как компонента прорисовалась можно выполнить запрос на сервер
 	componentDidMount() {
+		this.props.toggleIsFetching(true);
 		axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`)
 			.then(response => {
+				this.props.toggleIsFetching(false);
 				this.props.setUsers(response.data.items);
 				this.props.setTotalUsersCount(response.data.totalCount);
 			});
 	}
 
 	onPageChenged = (pageNumber) => {
+		this.props.toggleIsFetching(true);
 		this.props.setCurrentPage(pageNumber);
 		axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${pageNumber}&count=${this.props.pageSize}`)
 			.then(response => {
+				this.props.toggleIsFetching(false);
 				this.props.setUsers(response.data.items);
 			});
 	}
 
 	render() {
 		return <>
-			{this.props.isFetching ? <img /> : null}
+			{this.props.isFetching ? <Preloader /> : null}
 			<Users totalUsersCount={this.props.totalUsersCount}
 				pageSize={this.props.pageSize}
 				currentPage={this.props.currentPage}
@@ -57,6 +62,8 @@ let mapDispatchToProps = (dispatch) => {
 		setUsers: (users) => dispatch(setUsersAC(users)),
 		setCurrentPage: (currentPage) => dispatch(setCurrentPageAC(currentPage)),
 		setTotalUsersCount: (totalUsersCount) => dispatch(setTotalUsersCountAC(totalUsersCount)),
+		toggleIsFetching: (isFetching) => dispatch(toggleIsFetchingAC(isFetching)),
+
 	}
 }
 
