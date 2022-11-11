@@ -15,8 +15,9 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 
 root.render(
 	<React.StrictMode>
+		{/* Context API - хотим чтобы все наши дочерние компоненты могли обратиться к store: */}
 		<Provider store={store}>
-			<App store={store} />
+			<App />
 		</Provider>
 	</React.StrictMode>
 );
