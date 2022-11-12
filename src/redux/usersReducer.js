@@ -59,21 +59,21 @@ const usersReducer = (state = initialState, action) => {
 }
 
 // Подписаться на юзера
-export const followAC = userId => ({ type: FOLLOW, userId });
+export const follow = userId => ({ type: FOLLOW, userId });
 
 // Отписаться от юзера
-export const unfollowAC = userId => ({ type: UNFOLLOW, userId });
+export const unfollow = userId => ({ type: UNFOLLOW, userId });
 
 // Получаем данные на юзеров
-export const setUsersAC = users => ({ type: SET_USERS, users });
+export const setUsers = users => ({ type: SET_USERS, users });
 
 // Выбираем "порцию" юзеров
-export const setCurrentPageAC = currentPage => ({ type: SET_CURRENT_PAGE, currentPage });
+export const setCurrentPage = currentPage => ({ type: SET_CURRENT_PAGE, currentPage });
 
 // Сетаем общее количество юзеров
-export const setTotalUsersCountAC = totalUsersCount => ({ type: SET_TOTAL_USERS_COUNT, totalUsersCount });
+export const setTotalUsersCount = totalUsersCount => ({ type: SET_TOTAL_USERS_COUNT, totalUsersCount });
 
 // Определяем выводить гифку загрузки или нет
-export const toggleIsFetchingAC = isFetching => ({ type: TOGGLE_IS_FETCHING, isFetching });
+export const toggleIsFetching = isFetching => ({ type: TOGGLE_IS_FETCHING, isFetching });
 
 export default usersReducer;

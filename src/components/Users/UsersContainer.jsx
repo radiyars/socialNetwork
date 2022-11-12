@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { followAC, setCurrentPageAC, setTotalUsersCountAC, setUsersAC, toggleIsFetchingAC, unfollowAC } from "../../redux/usersReducer";
+import { follow, setCurrentPage, setTotalUsersCount, setUsers, toggleIsFetching, unfollow } from "../../redux/usersReducer";
 import axios from 'axios';
 import Users from "./Users";
 import Preloader from "../common/preloader/Preloader";
@@ -55,18 +55,13 @@ let mapStateToProps = (state) => {
 	}
 }
 
-let mapDispatchToProps = (dispatch) => {
-	return {
-		follow: (userId) => dispatch(followAC(userId)),
-		unfollow: (userId) => dispatch(unfollowAC(userId)),
-		setUsers: (users) => dispatch(setUsersAC(users)),
-		setCurrentPage: (currentPage) => dispatch(setCurrentPageAC(currentPage)),
-		setTotalUsersCount: (totalUsersCount) => dispatch(setTotalUsersCountAC(totalUsersCount)),
-		toggleIsFetching: (isFetching) => dispatch(toggleIsFetchingAC(isFetching)),
-
-	}
-}
-
 // Создаем контейнерную компоненту
 // connet сам вызовет mapStateToProps и сам передаст state. connect позволяет нам забыть про store.
-export default connect(mapStateToProps, mapDispatchToProps)(UsersContainer);
+export default connect(mapStateToProps, {
+	follow,
+	unfollow,
+	setUsers,
+	setCurrentPage,
+	setTotalUsersCount,
+	toggleIsFetching,
+})(UsersContainer);
