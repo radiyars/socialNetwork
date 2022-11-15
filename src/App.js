@@ -19,7 +19,8 @@ function App(props) {
 				<div className='app-wrapper-content'>
 					<Routes>
 						{/* С помошью Route следим за адресной строкой, и если адрес совпадает с path прорисовываем нашу компоненту */}
-						<Route path='/profile/*' element={<ProfileContainer />} />
+						<Route path='/profile/:userId' element={<ProfileContainer />} />
+						<Route path='/profile/' element={<ProfileContainer />} />
 						<Route path='/dialogs/*' element={<DialogsContainer />} />
 						<Route path='/users/' element={<UsersContainer />} />
 
