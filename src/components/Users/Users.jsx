@@ -2,6 +2,8 @@ import React from "react";
 import styles from './Users.module.css';
 import userPhoto from '../../assets/images/userNullAvatar.png'
 import { NavLink } from "react-router-dom";
+import axios from 'axios';
+
 
 let Users = (props) => {
 
@@ -36,8 +38,34 @@ let Users = (props) => {
 					</div>
 					<div>
 						{user.followed
-							? <button onClick={() => { props.unfollow(user.id) }}>Unfollow</button>
-							: <button onClick={() => { props.follow(user.id) }}>Follow</button>}
+
+							? <button onClick={() => {
+
+								axios.delete(`https://social-network.samuraijs.com/api/1.0/follow/${user.id}`,
+									{
+										withCredentials: true,
+										headers: { 'API-KEY': 'c7b45913-93c3-498c-9d8d-dac7cb1512dc' }
+									})
+									.then(response => {
+										if (response.data.resultCode == 0) {
+											props.unfollow(user.id)
+										}
+									});
+							}}>Unfollow</button>
+
+							: <button onClick={() => {
+
+								axios.post(`https://social-network.samuraijs.com/api/1.0/follow/${user.id}`, {},
+									{
+										withCredentials: true,
+										headers: { 'API-KEY': 'c7b45913-93c3-498c-9d8d-dac7cb1512dc' }
+									})
+									.then(response => {
+										if (response.data.resultCode == 0) {
+											props.follow(user.id)
+										}
+									});
+							}}>Follow</button>}
 					</div>
 				</span>
 				<span>
@@ -50,7 +78,7 @@ let Users = (props) => {
 						<div>{'user.location.city'}</div>
 					</span>
 				</span>
-			</div>
+			</div >
 			)
 		}
 	</div >
