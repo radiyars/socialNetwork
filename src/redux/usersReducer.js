@@ -4,6 +4,7 @@ const SET_USERS = 'SET-USERS';
 const SET_CURRENT_PAGE = 'SET-CURRENT-PAGE';
 const SET_TOTAL_USERS_COUNT = 'SET-TOTAL-USERS-COUNT';
 const TOGGLE_IS_FETCHING = 'TOGGLE_IS_FETCHING';
+const TOGGLE_IS_FOLLOWING_PROGRESS = 'TOGGLE_IS_FOLLOWING_PROGRESS';
 
 
 // state по умолчанию
@@ -13,6 +14,7 @@ let initialState = {
 	totalUsersCount: 0,
 	currentPage: 2,
 	isFetching: false,
+	followingInProgress: [],
 };
 
 const usersReducer = (state = initialState, action) => {
@@ -53,6 +55,14 @@ const usersReducer = (state = initialState, action) => {
 		case TOGGLE_IS_FETCHING:
 			return { ...state, isFetching: action.isFetching };
 
+		case TOGGLE_IS_FOLLOWING_PROGRESS:
+			return {
+				...state,
+				followingInProgress: action.followingInProgress
+					? [...state.followingInProgress, action.userId]
+					: state.followingInProgress.filter(id => id != action.userId)
+			};
+
 		default:
 			return state;
 	}
@@ -73,7 +83,10 @@ export const setCurrentPage = currentPage => ({ type: SET_CURRENT_PAGE, currentP
 // Сетаем общее количество юзеров
 export const setTotalUsersCount = totalUsersCount => ({ type: SET_TOTAL_USERS_COUNT, totalUsersCount });
 
-// Определяем выводить гифку загрузки или нет
+// Определяем выводить рисунок загрузки или нет
 export const toggleIsFetching = isFetching => ({ type: TOGGLE_IS_FETCHING, isFetching });
+
+// Определяем блокировать кнопку FOLLOW или нет
+export const toggleFollowingProgress = (followingInProgress, userId) => ({ type: TOGGLE_IS_FOLLOWING_PROGRESS, followingInProgress, userId });
 
 export default usersReducer;
