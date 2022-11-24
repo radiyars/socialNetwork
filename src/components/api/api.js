@@ -1,5 +1,13 @@
 import axios from "axios";
 
+const instance = axios.create({
+	withCredentials: true,
+	baseURL: 'https://social-network.samuraijs.com/api/1.0/',
+	headers: {
+		'API-KEY': 'c7b45913-93c3-498c-9d8d-dac7cb1512dc'
+	}
+});
+
 export const usersAPI = {
 
 	getUsers(currentPage = 1, pageSize = 10) {
@@ -12,20 +20,28 @@ export const usersAPI = {
 			.then(response => response.data);
 	},
 
-	// ! у post должен быть еще один объект после url
+	// у post должен быть еще один объект после url???
 	follow(userId = 0) {
 		return instance.post(`follow/${userId}`)
 			.then(response => response.data);
-	}
+	},
+
+
+
+	getUserProfile(userId = 0) {
+		return instance.get(`profile/${userId}`)
+			.then(response => response.data);
+	},
 
 }
 
-const instance = axios.create({
-	withCredentials: true,
-	baseURL: 'https://social-network.samuraijs.com/api/1.0/',
-	headers: {
-		'API-KEY': 'c7b45913-93c3-498c-9d8d-dac7cb1512dc'
-	}
-});
+export const authAPI = {
+	getUserAuthData() {
+		return instance.get(`auth/me`)
+			.then(response => response.data);
+	},
+}
+
+
 
 
