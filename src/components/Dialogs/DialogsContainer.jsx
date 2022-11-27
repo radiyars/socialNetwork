@@ -1,12 +1,12 @@
 import { connect } from 'react-redux';
 import { addMessageActionCreator, updateNewMessageActionCreator } from '../../redux/dialogsReducer';
 import Dialogs from './Dialogs';
+import { withAuthNavigate } from './../../hoc/withAuthNavigate';
 
 
 let mapStateToProps = (state) => {
 	return {
 		dialogsPage: state.dialogsPage,
-		isAuth: state.auth.isAuth,
 	}
 }
 
@@ -17,6 +17,9 @@ let mapDispatchToProps = (dispatch) => {
 	}
 }
 
-const DialogsContainer = connect(mapStateToProps, mapDispatchToProps)(Dialogs);
+// debugger;
+let AuthNavigateComponent = withAuthNavigate(Dialogs);
+
+const DialogsContainer = connect(mapStateToProps, mapDispatchToProps)(AuthNavigateComponent);
 
 export default DialogsContainer;

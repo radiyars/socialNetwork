@@ -2,7 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import Profile from './Profile';
 import { getUserProfile } from '../../redux/profileReducer';
-import { Navigate, useLocation, useNavigate, useParams, } from "react-router-dom";
+import { useLocation, useNavigate, useParams, } from "react-router-dom";
+import { withAuthNavigate } from './../../hoc/withAuthNavigate';
 
 // wrapper to use react router's v6 hooks in class component(to use HOC pattern, like in router v5)
 function withRouter(Component) {
@@ -39,7 +40,6 @@ class ProfileContainer extends React.Component {
 	}
 
 	render() {
-		if (!this.props.isAuth) return <Navigate to="/login" />
 
 		return (
 			// Контейнерная компонента должна отправить в дочернюю все что в нее приходит.
@@ -49,12 +49,17 @@ class ProfileContainer extends React.Component {
 	}
 }
 
+
+let AuthNavigateComponent = withAuthNavigate(ProfileContainer);
+
+
 let mapStateToProps = (state) => ({
 	profile: state.profilePage.profile,
-	isAuth: state.auth.isAuth,
 });
 
 
-export default connect(mapStateToProps, { getUserProfile })(withRouter(ProfileContainer));
+let WithUrlDataContainerComponent = withRouter(AuthNavigateComponent);
+
+export default connect(mapStateToProps, { getUserProfile })(WithUrlDataContainerComponent);
 // let WithUrlDataContainerComponent = withRouter(ProfileContainer);
 
