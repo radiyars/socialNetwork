@@ -1,5 +1,6 @@
 import style from './ProfileInfo.module.css';
 import Preloader from '../../common/preloader/Preloader';
+import ProfileStatus from './ProfileStatus';
 
 
 function ProfileInfo(props) {
@@ -8,12 +9,12 @@ function ProfileInfo(props) {
 	} else {
 		return (
 			<div>
-				<div>
+				{/* <div>
 					<img src='https://cdn.ziarahmekkah.com/2021/12/bg-footer-ziarah-mekkah.png' className={style.img} />
-				</div>
+				</div> */}
 				<div className={style.descriptionContainer}>
 					<img src={props.profile.photos.large} />
-					avatar + description
+					<ProfileStatus status={'hi radiy! go go go!'} />
 				</div>
 			</div>
 		)
