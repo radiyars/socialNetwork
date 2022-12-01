@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Profile from './Profile';
-import { getUserProfile } from '../../redux/profileReducer';
+import { getUserProfile, getStatus, updateStatus } from '../../redux/profileReducer';
 import { useLocation, useNavigate, useParams, } from "react-router-dom";
 import { withAuthNavigate } from './../../hoc/withAuthNavigate';
 import { compose } from 'redux';
@@ -30,9 +30,11 @@ class ProfileContainer extends React.Component {
 		// let userId = this.props.match.params.userId;
 		let userId = this.props.router.params.userId;
 		if (!userId) {
-			userId = 2;
+			userId = 26730;
 		}
 		this.props.getUserProfile(userId);
+		this.props.getStatus(userId);
+
 
 		// axios.get(`https://social-network.samuraijs.com/api/1.0/profile/` + userId)
 		// 	.then(response => {
@@ -44,7 +46,7 @@ class ProfileContainer extends React.Component {
 
 		return (
 			// Контейнерная компонента должна отправить в дочернюю все что в нее приходит.
-			<Profile {...this.props} profile={this.props.profile} />
+			<Profile {...this.props} profile={this.props.profile} status={this.props.status} updateStatus={this.props.updateStatus} />
 			// (если записать props=this.props то в дочерней компоненте будет props.props)
 		)
 	}
@@ -53,11 +55,12 @@ class ProfileContainer extends React.Component {
 
 let mapStateToProps = (state) => ({
 	profile: state.profilePage.profile,
+	status: state.profilePage.status,
 });
 
 
 export default compose(
-	connect(mapStateToProps, { getUserProfile }),
+	connect(mapStateToProps, { getUserProfile, getStatus, updateStatus }),
 	withRouter,
 	withAuthNavigate
 )(ProfileContainer);

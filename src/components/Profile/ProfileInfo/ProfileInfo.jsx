@@ -14,7 +14,7 @@ function ProfileInfo(props) {
 				</div> */}
 				<div className={style.descriptionContainer}>
 					<img src={props.profile.photos.large} />
-					<ProfileStatus status={'hi radiy! go go go!'} />
+					<ProfileStatus status={props.status} updateStatus={props.updateStatus} />
 				</div>
 			</div>
 		)
