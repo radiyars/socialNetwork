@@ -1,6 +1,8 @@
 import React from "react";
-import finalPropsSelectorFactory from "react-redux/es/connect/selectorFactory";
 import { Field, reduxForm } from "redux-form";
+import { login } from './../../redux/authReducer';
+import { connect } from 'react-redux';
+
 
 
 const LoginForm = (props) => {
@@ -10,10 +12,10 @@ const LoginForm = (props) => {
 				<Field placeholder={"Login"} name={'login'} component={'input'} />
 			</div>
 			<div>
-				<Field placeholder={"Password"} name={'passowrd'} component={'input'} />
+				<Field placeholder={"Password"} name={'password'} component={'input'} />
 			</div>
 			<div>
-				<Field component={'input'} name={'rememberMe'} type={'checkbox'} /> remember me
+				<Field type={'checkbox'} name={'rememberMe'} component={'input'} /> remember me
 			</div>
 			<div>
 				<button>Login</button>
@@ -25,7 +27,7 @@ const LoginReduxForm = reduxForm({ form: 'login' })(LoginForm);
 
 const Login = (props) => {
 	const onSubmit = (formData) => {
-		console.log(formData);
+		props.login(formData.login, formData.password, formData.rememberMe);
 	}
 
 	return <div>
@@ -34,5 +36,11 @@ const Login = (props) => {
 	</div>
 }
 
-export default Login;
 
+let mapStateToProps = (state) => ({
+	// profile: state.profilePage.profile,
+	// status: state.profilePage.status,
+});
+
+
+export default connect(mapStateToProps, { login })(Login);

@@ -28,18 +28,6 @@ const authReducer = (state = initialState, action) => {
 	}
 }
 
-// export const getUserAuthData = () => {
-// 	return (dispatch) => {
-// 		authAPI.getUserAuthData()
-// 			.then(data => {
-// 				if (data.resultCode === 0) {
-// 					let { id, email, login } = data.data;
-// 					dispatch(setAuthUserData(id, email, login));
-// 				};
-// 			});
-
-// 	}
-// }
 
 export const getUserAuthData = () => (dispatch) => {
 	authAPI.getUserAuthData()
@@ -52,6 +40,31 @@ export const getUserAuthData = () => (dispatch) => {
 
 }
 
+// export const updateStatus = (status) => {
+// 	return (dispatch) => {
+// 		profileAPI.updateStatus(status)
+// 			.then(data => {
+// 				if (data.resultCode === 0) {
+// 					dispatch(setStatus(status));
+// 				}
+// 			});
+// 	}
+// }
+
+// Логинимся 
+export const login = (email, password, rememberMe) => {
+	return (dispatch) => {
+		authAPI.login(email, password, rememberMe)
+			.then(data => {
+				console.log(data);
+
+				if (data.resultCode === 0) {
+					dispatch(console.log('logined succesfull'));
+					dispatch(data);
+				}
+			});
+	}
+}
 
 
 export const setAuthUserData = (userId, email, login) => ({ type: SET_USER_DATA, data: { userId, email, login } });

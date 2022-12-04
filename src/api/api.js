@@ -52,16 +52,20 @@ export const profileAPI = {
 			.then(response => response.data);
 	}
 
-
 }
+
 
 export const authAPI = {
 	getUserAuthData() {
 		return instance.get(`auth/me`)
 			.then(response => response.data);
 	},
-}
 
+	login(email, password, rememberMe) {
+		return instance.put(`auth/login`, { email, password, rememberMe })
+			.then(response => response.data);
+	}
+}
 
 
 

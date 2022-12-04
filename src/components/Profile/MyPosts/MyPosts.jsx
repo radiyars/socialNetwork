@@ -1,35 +1,25 @@
 import React from 'react';
 import style from './MyPosts.module.css'
 import Post from './Post/Post'
+import { Field, reduxForm } from "redux-form";
+
 
 
 function MyPosts(props) {
 
 	let postsElements = props.profilePage.posts.map(post => <Post message={post.post} likesCount={post.likesCount} />)
-	let newPostText = props.profilePage.newPostText;
 
-	// Пушим новый пост в state
-	let onAddPost = () => {
-		props.addPost()
-	}
-
-	// При любом изменении в textarea прокидываем иго (изменение) в state и уже оттуда выводим его 
-	// в textarea (FLUX - архитектура)
-	let onPostChange = (event) => {
-		let text = event.target.value;
-		props.updateNewPostText(text);
+	const addNewPost = (values) => {
+		props.addPost(values.newPostText);
 	}
 
 	return (
 		<div className={style.container}>
+
 			<div>
-				<div>
-					<textarea onChange={onPostChange}
-						value={newPostText}
-						placeholder='введите текст Вашего поста' />
-				</div>
-				<button onClick={onAddPost}>Add post</button>
+				<AddNewPostRedux onSubmit={addNewPost} />
 			</div>
+
 			<div className={style.posts}>
 				{postsElements}
 			</div>
@@ -37,6 +27,23 @@ function MyPosts(props) {
 	)
 
 }
+
+
+const AddNewPost = (props) => {
+	return (
+		<form onSubmit={props.handleSubmit} >
+			<div>
+				<Field placeholder={"your post text"} name={'newPostText'} component={'textarea'} />
+			</div>
+			<div>
+				<button>Add post</button>
+			</div>
+		</form>
+	)
+}
+
+const AddNewPostRedux = reduxForm({ form: 'post' })(AddNewPost);
+
 
 
 export default MyPosts
