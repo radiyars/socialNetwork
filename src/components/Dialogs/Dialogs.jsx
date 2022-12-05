@@ -3,6 +3,9 @@ import styles from './Dialogs.module.css';
 import DialogItem from './DialogItem/DialogItem';
 import Message from './Message/Message';
 import { Field, reduxForm } from "redux-form";
+import { Tetxtarea } from '../common/FormsControls/FormsControls';
+import { maxLengthCreator, required } from '../utils/validators/validators';
+
 
 
 function Dialogs(props) {
@@ -36,7 +39,7 @@ const AddMessageForm = (props) => {
 		// handleSubmit - специальный метод. придет к нам из reduxForm
 		<form onSubmit={props.handleSubmit}>
 			<div>
-				<Field component='textarea' name='newMessageText' placeholder='Enter your message' />
+				<Field component={Tetxtarea} name='newMessageText' placeholder='Enter your message' validate={[required, maxLengthCreator(10)]} />
 			</div>
 			<div>
 				<button>Send</button>
