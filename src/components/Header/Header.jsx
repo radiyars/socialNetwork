@@ -9,7 +9,12 @@ function Header(props) {
 			<img src='https://e7.pngegg.com/pngimages/356/636/png-clipart-logo-graphic-designer-business-online-and-offline-design-ring-orange.png' />
 
 			<div className={styles.loginBlock}>
-				{props.isAuth ? props.login : <NavLink to={'/login'} >Login</NavLink>}
+				{props.isAuth
+					? <div>
+						{props.login}
+						<button onClick={props.logout}>Log out</button>
+					</div>
+					: <NavLink to={'/login'} >Login</NavLink>}
 			</div>
 		</header>
 	)
