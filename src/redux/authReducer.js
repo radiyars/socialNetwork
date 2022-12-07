@@ -8,7 +8,6 @@ let initialState = {
 	email: null,
 	login: null,
 	isAuth: false,
-	// isFeching: false,
 }
 
 const authReducer = (state = initialState, action) => {
@@ -19,7 +18,6 @@ const authReducer = (state = initialState, action) => {
 			return {
 				...state,
 				...action.payload,
-				isAuth: true,
 			}
 
 		default:
@@ -28,7 +26,10 @@ const authReducer = (state = initialState, action) => {
 	}
 }
 
+// Устанавливаем данные пользователя
+export const setAuthUserData = (userId, email, login, isAuth) => ({ type: SET_USER_DATA, payload: { userId, email, login, isAuth } });
 
+// Получаем данные пользователя
 export const getUserAuthData = () => (dispatch) => {
 	authAPI.getUserAuthData()
 		.then(data => {
@@ -58,7 +59,7 @@ export const logout = () => {
 		authAPI.logout()
 			.then(data => {
 				if (data.resultCode === 0) {
-					dispatch(getUserAuthData(null, null, null, false));
+					dispatch(setAuthUserData(null, null, null, false));
 				}
 			});
 	}
@@ -66,6 +67,5 @@ export const logout = () => {
 
 
 
-export const setAuthUserData = (userId, email, login, isAuth) => ({ type: SET_USER_DATA, payload: { userId, email, login, isAuth } });
 
 export default authReducer;
