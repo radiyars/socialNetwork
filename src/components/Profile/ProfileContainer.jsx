@@ -26,27 +26,24 @@ function withRouter(Component) {
 class ProfileContainer extends React.Component {
 
 	componentDidMount() {
-		// debugger;
-		// let userId = this.props.match.params.userId;
+
 		let userId = this.props.router.params.userId;
 		if (!userId) {
-			userId = 26730;
+			userId = this.props.authorisedUserId;
 		}
 		this.props.getUserProfile(userId);
 		this.props.getStatus(userId);
 
-
-		// axios.get(`https://social-network.samuraijs.com/api/1.0/profile/` + userId)
-		// 	.then(response => {
-		// 		this.props.setUserProfile(response.data);
-		// 	});
 	}
 
 	render() {
 
 		return (
 			// Контейнерная компонента должна отправить в дочернюю все что в нее приходит.
-			<Profile {...this.props} profile={this.props.profile} status={this.props.status} updateStatus={this.props.updateStatus} />
+			<Profile {...this.props}
+				profile={this.props.profile}
+				status={this.props.status}
+				updateStatus={this.props.updateStatus} />
 			// (если записать props=this.props то в дочерней компоненте будет props.props)
 		)
 	}
@@ -56,6 +53,8 @@ class ProfileContainer extends React.Component {
 let mapStateToProps = (state) => ({
 	profile: state.profilePage.profile,
 	status: state.profilePage.status,
+	authorisedUserId: state.auth.userId,
+	isAuth: state.auth.isAuth,
 });
 
 

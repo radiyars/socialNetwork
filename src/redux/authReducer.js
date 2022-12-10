@@ -1,4 +1,6 @@
 import { authAPI } from '../api/api';
+import { stopSubmit } from 'redux-form';
+import Message from './../components/Dialogs/Message/Message';
 
 const SET_USER_DATA = 'SET_USER_DATA';
 
@@ -42,16 +44,19 @@ export const getUserAuthData = () => (dispatch) => {
 }
 
 // Залогиниться
-export const login = (email, password, rememberMe) => {
-	return (dispatch) => {
-		authAPI.login(email, password, rememberMe)
-			.then(data => {
-				if (data.resultCode === 0) {
-					dispatch(getUserAuthData());
-				}
-			});
-	}
+export const login = (email, password, rememberMe) => (dispatch) => {
+
+	return authAPI.login(email, password, rememberMe)
+		.then(data => {
+			if (data.resultCode === 0) {
+				dispatch(getUserAuthData());
+			} else {
+				let message = data.messages.length > 0 ? data.messages[0] : 'Some error'
+				dispatch(stopSubmit('login', { _error: message }));
+			}
+		});
 }
+
 
 // Вылогиниться
 export const logout = () => {
