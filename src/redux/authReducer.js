@@ -33,12 +33,12 @@ export const setAuthUserData = (userId, email, login, isAuth) => ({ type: SET_US
 
 // Получаем данные пользователя
 export const getUserAuthData = () => (dispatch) => {
-	authAPI.getUserAuthData()
+	return authAPI.getUserAuthData()
 		.then(data => {
 			if (data.resultCode === 0) {
 				let { id, email, login } = data.data;
 				dispatch(setAuthUserData(id, email, login, true));
-			};
+			}
 		});
 
 }

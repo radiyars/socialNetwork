@@ -6,6 +6,7 @@ import profileReducer from "./profileReducer";
 import usersReducer from "./usersReducer";
 import thunkMiddleware from "redux-thunk";
 import { reducer as formReducer } from 'redux-form';
+import appReducer from './appReducer';
 
 // Отдаем редьюсеры редаксовскому стору
 let reducers = combineReducers({
@@ -14,6 +15,7 @@ let reducers = combineReducers({
 	usersPage: usersReducer,
 	auth: authReducer,
 	form: formReducer,
+	app: appReducer,
 });
 
 // Создаем store. В нем уже имеются методы gerState, subcscribe, dispatch.
