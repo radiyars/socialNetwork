@@ -1,9 +1,11 @@
 import React from "react";
 import { connect } from "react-redux";
-import { follow, setCurrentPage, unfollow, getUsers } from "../../redux/usersReducer";
+import { follow, setCurrentPage, unfollow, requestUsers } from "../../redux/usersReducer";
 import Users from "./Users";
 import Preloader from "../common/preloader/Preloader";
 import { toggleFollowingProgress } from './../../redux/usersReducer';
+import { getCurrentPage, getFollowingInProgress, getPageSize, getTotalUsersCount, getIsFetching, getUsers } from "../../redux/users-selectors";
+// import { getTotalUsersCount, getIsFetching, getUsers } from './../../redux/users-selectors';
 
 
 class UsersContainer extends React.Component {
@@ -36,16 +38,18 @@ class UsersContainer extends React.Component {
 	}
 }
 
+
 let mapStateToProps = (state) => {
 	return {
-		users: state.usersPage.users,
-		pageSize: state.usersPage.pageSize,
-		totalUsersCount: state.usersPage.totalUsersCount,
-		currentPage: state.usersPage.currentPage,
-		isFetching: state.usersPage.isFetching,
-		followingInProgress: state.usersPage.followingInProgress,
+		users: getUsers(state),
+		pageSize: getPageSize(state),
+		totalUsersCount: getTotalUsersCount(state),
+		currentPage: getCurrentPage(state),
+		isFetching: getIsFetching(state),
+		followingInProgress: getFollowingInProgress(state),
 	}
 }
+
 
 // Создаем контейнерную компоненту
 // connet сам вызовет mapStateToProps и сам передаст state. connect позволяет нам забыть про store.
@@ -54,5 +58,5 @@ export default connect(mapStateToProps, {
 	unfollow,
 	setCurrentPage,
 	toggleFollowingProgress,
-	getUsers,
+	getUsers: requestUsers,
 })(UsersContainer);
