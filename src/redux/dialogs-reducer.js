@@ -1,4 +1,4 @@
-const ADD_MESSAGE = 'ADD-MESSAGE';
+const ADD_MESSAGE = 'dialogs/ADD-MESSAGE';
 
 // state по умолчанию
 let initialState = {

@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { addMessageActionCreator } from '../../redux/dialogsReducer';
+import { addMessageActionCreator } from '../../redux/dialogs-reducer';
 import Dialogs from './Dialogs';
 import { withAuthNavigate } from './../../hoc/withAuthNavigate';
 import { compose } from 'redux';

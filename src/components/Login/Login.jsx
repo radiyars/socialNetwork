@@ -1,28 +1,22 @@
 import React from "react";
-import { Field, reduxForm } from "redux-form";
-import { login } from './../../redux/authReducer';
+import { reduxForm } from "redux-form";
+import { login } from '../../redux/auth-reducer';
 import { connect } from 'react-redux';
-import { Input } from "../common/FormsControls/FormsControls";
+import { createField, Input } from "../common/FormsControls/FormsControls";
 import { maxLengthCreator, required } from "../utils/validators/validators";
 import { Navigate } from "react-router-dom";
 import style from './../common/FormsControls/FormsControls.module.css';
 
 
-
-const LoginForm = (props) => {
+const LoginForm = ({ handleSubmit, error }) => {
 	return (
-		<form onSubmit={props.handleSubmit} >
-			<div>
-				<Field placeholder={"Login"} name={'login'} component={Input} validate={[required, maxLengthCreator(30)]} />
-			</div>
-			<div>
-				<Field placeholder={"Password"} name={'password'} component={Input} validate={[required, maxLengthCreator(30)]} />
-			</div>
-			<div>
-				<Field type={'checkbox'} name={'rememberMe'} component={'input'} /> remember me
-			</div>
-			{props.error && <div className={style.formSummaryError}>
-				{props.error}
+		<form onSubmit={handleSubmit} >
+			{createField('Email', 'email', [required, maxLengthCreator(30)], Input)}
+			{createField('Password', 'password', [required, maxLengthCreator(30)], Input, { type: 'password' })}
+			{createField(null, 'rememberMe', [], Input, { type: 'checkbox' }, 'remember me')}
+
+			{error && <div className={style.formSummaryError}>
+				{error}
 			</div>
 			}
 			<div>
@@ -31,11 +25,13 @@ const LoginForm = (props) => {
 		</form>)
 }
 
+
 const LoginReduxForm = reduxForm({ form: 'login' })(LoginForm);
+
 
 const Login = (props) => {
 	const onSubmit = (formData) => {
-		props.login(formData.login, formData.password, formData.rememberMe);
+		props.login(formData.email, formData.password, formData.rememberMe);
 	}
 
 	if (props.isAuth) {
@@ -48,9 +44,11 @@ const Login = (props) => {
 	</div>
 }
 
+
 const mapStateToProps = (state) => ({
 	isAuth: state.auth.isAuth,
 })
+
 
 // connect засовывает login не thunk а callback!!!
 export default connect(mapStateToProps, { login })(Login);
