@@ -10,14 +10,17 @@ class UsersContainer extends React.Component {
 
 	// полсе того как компонента прорисовалась можно выполнить запрос на сервер
 	componentDidMount() {
-		this.props.getUsers(this.props.currentPage, this.props.pageSize);
-
+		const { currentPage, pageSize } = this.props;
+		this.props.getUsers(currentPage, pageSize);
 	}
+
 
 	onPageChenged = (pageNumber) => {
+		const { pageSize } = this.props;
 		this.props.setCurrentPage(pageNumber);
-		this.props.getUsers(pageNumber, this.props.pageSize);
+		this.props.getUsers(pageNumber, pageSize);
 	}
+
 
 	render() {
 		return <>
